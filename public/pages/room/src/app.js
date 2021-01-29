@@ -3,12 +3,19 @@ const onload = () => {
   const room = urlParams.get('room');
   console.log('this is the room', room)
 
-  const socketUrl = 'http://localhost:3000'
+  const socketUrl = 'http://localhost:3000' // for dev ambient
+  // const socketUrl = 'https://zoomclone-server.herokuapp.com' // production
   const socketBuilder = new SocketBuilder({ socketUrl })
 
   const peerConfig = Object.values({
     id: undefined,
     config: {
+      
+      /* production */
+      // host: 'polar-oasis-34595.herokuapp.com',
+      // secure: true,
+
+      /* dev ambient */
       port: 9000,
       host: 'localhost',
       path: '/'
