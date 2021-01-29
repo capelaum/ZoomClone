@@ -62,6 +62,28 @@ class Recorder {
     await Util.sleep(200)
     this.completedRecordings.push([...this.recordedBlobs])
     this.recordedBlobs = []
+  }
 
+  getAllVideoURLs() {
+    return this.completedRecordings.map(recording => {
+      const superBuffer = new Blob(recording, { type: this.videoType })
+
+      return window.URL.createObjectURL(superBuffer)
+    })
+  }
+
+  download() {
+    if(!this.completedRecordings.length) return
+
+    for(const recording of this.completedRecordings) {
+      const blob = new Blob(recording, { type: this.videoType})
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = url
+      a.download = `${this.filename}.webm`
+      document.body.appendChild(a)
+      a.click()
+    }
   }
 }
